@@ -50,7 +50,7 @@ export default function App() {
           onClick={toggleLang}
           className="bg-white/30 backdrop-blur-md px-4 py-2 rounded-full font-bold text-white shadow-sm flex items-center gap-2"
         >
-          <span>{lang === 'de' ? '🇩🇪 DE' : '🇬🇧 EN'}</span>
+          <span>{lang === 'de' ? 'DE 🌐 EN' : 'EN 🌐 DE'}</span>
         </motion.button>
       </header>
 
