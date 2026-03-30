@@ -39,9 +39,9 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
-      className="w-full max-w-5xl h-[85vh] flex flex-col bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden"
+      className="w-full max-w-5xl h-[90vh] flex flex-col bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden"
     >
-      <div className="p-4 sm:p-6 bg-white/50 border-b border-white/20 flex items-center justify-between">
+      <div className="px-4 py-2 sm:px-6 sm:py-3 bg-white/50 border-b border-white/20 flex items-center justify-between">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -55,39 +55,39 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
         <div className="w-24"></div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 sm:p-8 flex flex-col">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-5 flex flex-col">
         {/* General Info Section */}
-        <div className="mb-8 bg-indigo-50 p-6 rounded-3xl border border-indigo-100 shadow-sm">
-          <h3 className="text-xl font-bold text-indigo-800 mb-4 flex items-center gap-2">
-            <Info className="w-6 h-6" />
+        <div className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-2xl border border-indigo-100 shadow-sm">
+          <h3 className="text-lg font-bold text-indigo-800 mb-2 flex items-center gap-2">
+            <Info className="w-5 h-5" />
             {lang === 'de' ? 'Wusstest du schon?' : 'Did you know?'}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-indigo-900/80 text-lg">
-            <div className="bg-white/60 p-4 rounded-2xl">
-              <span className="font-bold block mb-1">🌍 {lang === 'de' ? 'Wie viele gibt es?' : 'How many are there?'}</span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-indigo-900/80 text-sm">
+            <div className="bg-white/60 p-2.5 rounded-xl">
+              <span className="font-bold block mb-0.5">🌍 {lang === 'de' ? 'Wie viele gibt es?' : 'How many are there?'}</span>
               {lang === 'de' ? 'Es gibt 7 Kontinente und 5 Ozeane auf unserer Erde.' : 'There are 7 continents and 5 oceans on our Earth.'}
             </div>
-            <div className="bg-white/60 p-4 rounded-2xl">
-              <span className="font-bold block mb-1">🐘 {lang === 'de' ? 'Größter & Kleinster:' : 'Largest & Smallest:'}</span>
+            <div className="bg-white/60 p-2.5 rounded-xl">
+              <span className="font-bold block mb-0.5">🐘 {lang === 'de' ? 'Größter & Kleinster:' : 'Largest & Smallest:'}</span>
               {lang === 'de' ? 'Asien ist der größte und Ozeanien der kleinste Kontinent.' : 'Asia is the largest and Oceania is the smallest continent.'}
             </div>
-            <div className="bg-white/60 p-4 rounded-2xl">
-              <span className="font-bold block mb-1">🌊 {lang === 'de' ? 'Größter Ozean:' : 'Largest Ocean:'}</span>
+            <div className="bg-white/60 p-2.5 rounded-xl">
+              <span className="font-bold block mb-0.5">🌊 {lang === 'de' ? 'Größter Ozean:' : 'Largest Ocean:'}</span>
               {lang === 'de' ? 'Der Pazifische Ozean ist der größte und tiefste Ozean.' : 'The Pacific Ocean is the largest and deepest ocean.'}
             </div>
-            <div className="bg-white/60 p-4 rounded-2xl">
-              <span className="font-bold block mb-1">🧊 {lang === 'de' ? 'Kältester Kontinent:' : 'Coldest Continent:'}</span>
+            <div className="bg-white/60 p-2.5 rounded-xl">
+              <span className="font-bold block mb-0.5">🧊 {lang === 'de' ? 'Kältester Kontinent:' : 'Coldest Continent:'}</span>
               {lang === 'de' ? 'Antarktika ist fast vollständig mit Eis bedeckt.' : 'Antarctica is almost completely covered in ice.'}
             </div>
-            <div className="bg-white/60 p-4 rounded-2xl">
-              <span className="font-bold block mb-1">👨‍👩‍👧‍👦 {lang === 'de' ? 'Die meisten Menschen:' : 'Most People:'}</span>
+            <div className="bg-white/60 p-2.5 rounded-xl">
+              <span className="font-bold block mb-0.5">👨‍👩‍👧‍👦 {lang === 'de' ? 'Die meisten Menschen:' : 'Most People:'}</span>
               {lang === 'de' ? 'In Asien leben die meisten Menschen der Welt.' : 'Most people in the world live in Asia.'}
             </div>
           </div>
         </div>
 
         {/* World Map */}
-        <div className="relative w-full max-w-4xl mx-auto mb-10 aspect-[2/1] bg-sky-100 rounded-3xl overflow-hidden border-4 border-white shadow-inner flex-shrink-0">
+        <div className="relative w-full max-w-4xl mx-auto mb-4 aspect-[2/1] bg-sky-100 rounded-3xl overflow-hidden border-4 border-white shadow-inner flex-shrink-0">
           <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} style={{ width: "100%", height: "100%" }}>
             <Geographies geography={worldData}>
               {({ geographies }) =>
@@ -163,28 +163,28 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
         </div>
 
         {/* Continent Cards */}
-        <h3 className="text-2xl font-bold text-indigo-800 mb-4">{lang === 'de' ? 'Kontinente' : 'Continents'}</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+        <h3 className="text-lg font-bold text-indigo-800 mb-2">{lang === 'de' ? 'Kontinente' : 'Continents'}</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 mb-4">
           {t.continents.map((c, i) => (
             <motion.div
               key={c.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              whileHover={{ scale: 1.03, y: -5 }}
+              whileHover={{ scale: 1.03, y: -3 }}
               whileTap={{ scale: 0.98 }}
               onMouseEnter={() => setHoveredContinent(c.id)}
               onMouseLeave={() => setHoveredContinent(null)}
               onClick={() => handleSelect(c)}
-              className={`${c.color} cursor-pointer rounded-3xl p-4 text-white shadow-lg relative overflow-hidden group`}
+              className={`${c.color} cursor-pointer rounded-2xl p-2.5 text-white shadow-md relative overflow-hidden group touch-manipulation`}
             >
-              <div className="absolute -right-4 -bottom-4 text-6xl opacity-30 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute -right-3 -bottom-3 text-4xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {c.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-3">
-                <span className="text-4xl">{c.emoji}</span>
+              <div className="relative z-10 flex items-center gap-2">
+                <span className="text-2xl">{c.emoji}</span>
                 <div>
-                  <h3 className="text-xl font-bold leading-tight">{c.name}</h3>
+                  <h3 className="text-sm font-bold leading-tight">{c.name}</h3>
                 </div>
               </div>
             </motion.div>
@@ -192,26 +192,26 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
         </div>
 
         {/* Ocean Cards */}
-        <h3 className="text-2xl font-bold text-indigo-800 mb-4">{lang === 'de' ? 'Ozeane' : 'Oceans'}</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <h3 className="text-lg font-bold text-indigo-800 mb-2">{lang === 'de' ? 'Ozeane' : 'Oceans'}</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {t.oceans.map((o, i) => (
             <motion.div
               key={o.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              whileHover={{ scale: 1.03, y: -5 }}
+              whileHover={{ scale: 1.03, y: -3 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSelect(o)}
-              className={`${o.color} cursor-pointer rounded-3xl p-4 text-white shadow-lg relative overflow-hidden group`}
+              className={`${o.color} cursor-pointer rounded-2xl p-2.5 text-white shadow-md relative overflow-hidden group touch-manipulation`}
             >
-              <div className="absolute -right-4 -bottom-4 text-6xl opacity-30 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute -right-3 -bottom-3 text-4xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {o.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-3">
-                <span className="text-4xl">{o.emoji}</span>
+              <div className="relative z-10 flex items-center gap-2">
+                <span className="text-2xl">{o.emoji}</span>
                 <div>
-                  <h3 className="text-xl font-bold leading-tight">{o.name}</h3>
+                  <h3 className="text-sm font-bold leading-tight">{o.name}</h3>
                 </div>
               </div>
             </motion.div>

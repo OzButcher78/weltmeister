@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* Prevent double-tap zoom on touch devices */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Fix iOS Safari 100vh issue */
+html, body, #root {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Prevent pull-to-refresh on mobile when scrolling the app */
+body {
+  overscroll-behavior: none;
+}

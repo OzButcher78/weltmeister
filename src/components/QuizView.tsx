@@ -114,7 +114,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileTap={!selectedAnswer ? { scale: 0.98 } : {}}
                       onClick={() => handleAnswer(opt)}
                       disabled={selectedAnswer !== null}
-                      className={`relative p-6 rounded-2xl text-xl font-bold transition-all text-left flex justify-between items-center ${btnClass}`}
+                      className={`relative p-6 rounded-2xl text-xl font-bold transition-all text-left flex justify-between items-center touch-manipulation ${btnClass}`}
                     >
                       {opt}
                       {showCorrect && <CheckCircle2 className="w-6 h-6 text-green-600" />}

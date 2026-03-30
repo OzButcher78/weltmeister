@@ -31,9 +31,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 font-sans text-slate-800 overflow-hidden flex flex-col">
+    <div className="min-h-dvh bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 font-sans text-slate-800 overflow-hidden flex flex-col">
       {/* Header */}
-      <header className="p-4 flex justify-between items-center relative z-10">
+      <header className="px-4 py-2 flex justify-between items-center relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -55,7 +55,7 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative flex items-center justify-center p-4">
+      <main className="flex-1 relative flex items-start justify-center p-2 sm:p-4">
         <AnimatePresence mode="wait">
           {view === 'menu' && (
             <motion.div
@@ -113,7 +113,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="p-4 text-center text-white/80 text-sm font-medium relative z-10">
+      <footer className="px-4 py-2 text-center text-white/80 text-sm font-medium relative z-10">
         <div className="flex justify-center gap-4 mb-2">
           <button onClick={() => navigate('impressum')} className="hover:text-white transition-colors">
             {t.legal.impressum.title}
