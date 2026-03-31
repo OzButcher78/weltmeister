@@ -5,7 +5,7 @@ button, a, [role="button"] {
   touch-action: manipulation;
 }
 
-/* Fix iOS Safari 100vh issue */
+/* Fix iOS Safari 100vh issue & safe area insets */
 html, body, #root {
   height: 100%;
   -webkit-text-size-adjust: 100%;
@@ -14,4 +14,27 @@ html, body, #root {
 /* Prevent pull-to-refresh on mobile when scrolling the app */
 body {
   overscroll-behavior: none;
+}
+
+/* Safe area padding for notched devices (iPhone X+) */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Scrollbar styling for mobile-like feel */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+/* Prevent text selection on interactive elements for mobile */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
 }

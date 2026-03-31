@@ -142,17 +142,17 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[60vh]"
+      className="w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[50dvh] sm:min-h-[60dvh]"
     >
-      <div className="px-4 py-2 sm:px-6 sm:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="flex items-center gap-2 text-indigo-600 font-bold bg-white px-4 py-2 rounded-full shadow-sm touch-manipulation"
+            className="flex items-center gap-1.5 sm:gap-2 text-indigo-600 font-bold bg-white px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation text-sm sm:text-base"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="hidden sm:inline">{t.backBtn}</span>
           </motion.button>
           {!isFinished && (
@@ -160,34 +160,34 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={stopQuiz}
-              className="flex items-center gap-2 text-red-600 font-bold bg-red-50 px-4 py-2 rounded-full shadow-sm touch-manipulation border border-red-200"
+              className="flex items-center gap-1.5 sm:gap-2 text-red-600 font-bold bg-red-50 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation border border-red-200 text-sm sm:text-base"
             >
-              <Square className="w-4 h-4 fill-red-600" />
+              <Square className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-red-600" />
               <span className="hidden sm:inline">{lang === 'de' ? 'Beenden' : 'Stop'}</span>
             </motion.button>
           )}
         </div>
         {!isFinished && (
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
-              <Trophy className="w-4 h-4 text-amber-500" />
-              <span className="font-bold text-amber-700 text-sm">{points}</span>
+          <div className="flex items-center gap-1.5 sm:gap-4">
+            <div className="flex items-center gap-0.5 sm:gap-1 bg-amber-50 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-amber-200">
+              <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
+              <span className="font-bold text-amber-700 text-xs sm:text-sm">{points}</span>
             </div>
             <div className="flex items-center gap-0.5">
               {Array.from({ length: MAX_WRONG }).map((_, i) => (
                 i < livesLeft
-                  ? <Heart key={i} className="w-5 h-5 text-red-400 fill-red-400" />
-                  : <HeartOff key={i} className="w-5 h-5 text-slate-300" />
+                  ? <Heart key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-red-400 fill-red-400" />
+                  : <HeartOff key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300" />
               ))}
             </div>
-            <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1.5 rounded-full shadow-sm">
+            <div className="text-xs sm:text-sm font-bold text-slate-500 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-sm">
               {currentIndex + 1}/{questions.length}
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-6 sm:p-10 flex-1 flex flex-col justify-center">
+      <div className="p-4 sm:p-6 md:p-10 flex-1 flex flex-col justify-center overflow-y-auto">
         <AnimatePresence mode="wait">
           {!isFinished ? (
             <motion.div
@@ -197,11 +197,11 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
               exit={{ opacity: 0, x: -20 }}
               className="flex flex-col h-full"
             >
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-8 text-center leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-800 mb-4 sm:mb-6 md:mb-8 text-center leading-tight">
                 {questions[currentIndex].q}
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
                 {questions[currentIndex].options.map((opt, i) => {
                   const isSelected = selectedAnswer === opt;
                   const isCorrect = opt === questions[currentIndex].answer;
@@ -220,11 +220,11 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileTap={!selectedAnswer ? { scale: 0.98 } : {}}
                       onClick={() => handleAnswer(opt)}
                       disabled={selectedAnswer !== null}
-                      className={`relative p-6 rounded-2xl text-xl font-bold transition-all text-left flex justify-between items-center touch-manipulation ${btnClass}`}
+                      className={`relative p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl font-bold transition-all text-left flex justify-between items-center touch-manipulation ${btnClass}`}
                     >
                       {opt}
-                      {showCorrect && <CheckCircle2 className="w-6 h-6 text-green-600" />}
-                      {showWrong && <XCircle className="w-6 h-6 text-red-600" />}
+                      {showCorrect && <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 ml-2" />}
+                      {showWrong && <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 ml-2" />}
                     </motion.button>
                   );
                 })}
@@ -236,7 +236,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-auto flex flex-col items-center gap-2"
                 >
-                  <div className="text-lg font-bold text-slate-500">
+                  <div className="text-base sm:text-lg font-bold text-slate-500">
                     {selectedAnswer === questions[currentIndex].answer
                       ? <span className="text-green-600">+{POINTS_CORRECT} {lang === 'de' ? 'Punkte' : 'points'}</span>
                       : <span className="text-red-500">{POINTS_WRONG} {lang === 'de' ? 'Punkte' : 'points'}</span>
@@ -247,7 +247,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={nextQuestion}
-                      className="bg-indigo-600 text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
+                      className="bg-indigo-600 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
                     >
                       {currentIndex < questions.length - 1 ? t.nextQuestion : t.finishQuiz}
                     </motion.button>
@@ -260,26 +260,26 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
               key="result"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-6"
+              className="text-center py-3 sm:py-6"
             >
               {!showHighscores ? (
                 <>
                   <motion.div
                     animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
-                    className="inline-block mb-4 text-7xl"
+                    className="inline-block mb-2 sm:mb-4 text-5xl sm:text-6xl md:text-7xl"
                   >
                     {gameOver ? '💥' : points >= 100 ? '🌟' : points >= 60 ? '🎉' : '👍'}
                   </motion.div>
 
-                  <h2 className="text-4xl font-extrabold text-slate-800 mb-2">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-800 mb-1.5 sm:mb-2">
                     {gameOver
                       ? (lang === 'de' ? 'Game Over!' : 'Game Over!')
                       : t.scoreTitle
                     }
                   </h2>
 
-                  <p className="text-xl text-slate-600 font-medium mb-2">
+                  <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium mb-1.5 sm:mb-2">
                     {gameOver
                       ? (lang === 'de' ? '5 falsche Antworten!' : '5 wrong answers!')
                       : currentIndex < questions.length - 1
@@ -292,15 +292,15 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                     }
                   </p>
 
-                  <div className="flex justify-center items-center gap-3 mb-6">
-                    <Trophy className="w-8 h-8 text-amber-500" />
-                    <span className="text-4xl font-extrabold text-amber-600">{points}</span>
-                    <span className="text-xl text-slate-500 font-bold">{lang === 'de' ? 'Punkte' : 'Points'}</span>
+                  <div className="flex justify-center items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
+                    <span className="text-3xl sm:text-4xl font-extrabold text-amber-600">{points}</span>
+                    <span className="text-lg sm:text-xl text-slate-500 font-bold">{lang === 'de' ? 'Punkte' : 'Points'}</span>
                   </div>
 
                   {!nameSaved ? (
-                    <div className="max-w-sm mx-auto mb-6">
-                      <label className="block text-left text-sm font-bold text-slate-600 mb-2">
+                    <div className="max-w-sm mx-auto mb-4 sm:mb-6 px-2 sm:px-0">
+                      <label className="block text-left text-xs sm:text-sm font-bold text-slate-600 mb-1.5 sm:mb-2">
                         {lang === 'de' ? 'Dein Name für die Bestenliste:' : 'Your name for the highscore board:'}
                       </label>
                       <div className="flex gap-2">
@@ -311,14 +311,14 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                           onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
                           placeholder={lang === 'de' ? 'Name eingeben...' : 'Enter name...'}
                           maxLength={20}
-                          className="flex-1 px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-indigo-400 focus:outline-none text-lg font-medium"
+                          className="flex-1 px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl border-2 border-slate-200 focus:border-indigo-400 focus:outline-none text-base sm:text-lg font-medium"
                         />
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={handleSaveName}
                           disabled={!playerName.trim()}
-                          className="bg-amber-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-amber-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation"
+                          className="bg-amber-500 text-white font-bold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl hover:bg-amber-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
                         >
                           {lang === 'de' ? 'Speichern' : 'Save'}
                         </motion.button>
@@ -326,12 +326,12 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                     </div>
                   ) : null}
 
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={resetQuiz}
-                      className="bg-indigo-600 text-white text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-indigo-700 touch-manipulation"
+                      className="bg-indigo-600 text-white text-base sm:text-lg font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-full shadow-lg hover:bg-indigo-700 touch-manipulation"
                     >
                       {t.playAgain}
                     </motion.button>
@@ -339,10 +339,10 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setShowHighscores(true)}
-                      className="bg-amber-100 text-amber-800 text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-amber-200 touch-manipulation"
+                      className="bg-amber-100 text-amber-800 text-base sm:text-lg font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-full shadow-lg hover:bg-amber-200 touch-manipulation"
                     >
                       <span className="flex items-center justify-center gap-2">
-                        <Trophy className="w-5 h-5" />
+                        <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
                         {lang === 'de' ? 'Bestenliste' : 'Highscores'}
                       </span>
                     </motion.button>
@@ -350,7 +350,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={onBack}
-                      className="bg-slate-200 text-slate-800 text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-slate-300 touch-manipulation"
+                      className="bg-slate-200 text-slate-800 text-base sm:text-lg font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-full shadow-lg hover:bg-slate-300 touch-manipulation"
                     >
                       {t.backBtn}
                     </motion.button>
@@ -358,22 +358,22 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                 </>
               ) : (
                 <>
-                  <div className="flex items-center justify-center gap-3 mb-6">
-                    <Trophy className="w-8 h-8 text-amber-500" />
-                    <h2 className="text-3xl font-extrabold text-slate-800">
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800">
                       {lang === 'de' ? 'Bestenliste' : 'Highscores'}
                     </h2>
                   </div>
 
                   {highscores.length > 0 ? (
-                    <div className="max-w-md mx-auto mb-6 rounded-2xl overflow-hidden border border-slate-200">
-                      <table className="w-full">
+                    <div className="max-w-md mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border border-slate-200">
+                      <table className="w-full text-sm sm:text-base">
                         <thead>
-                          <tr className="bg-slate-100 text-sm font-bold text-slate-600">
-                            <th className="py-2.5 px-3 text-left">#</th>
-                            <th className="py-2.5 px-3 text-left">{lang === 'de' ? 'Name' : 'Name'}</th>
-                            <th className="py-2.5 px-3 text-right">{lang === 'de' ? 'Punkte' : 'Points'}</th>
-                            <th className="py-2.5 px-3 text-right">{lang === 'de' ? 'Datum' : 'Date'}</th>
+                          <tr className="bg-slate-100 text-xs sm:text-sm font-bold text-slate-600">
+                            <th className="py-2 px-2 sm:py-2.5 sm:px-3 text-left">#</th>
+                            <th className="py-2 px-2 sm:py-2.5 sm:px-3 text-left">{lang === 'de' ? 'Name' : 'Name'}</th>
+                            <th className="py-2 px-2 sm:py-2.5 sm:px-3 text-right">{lang === 'de' ? 'Punkte' : 'Points'}</th>
+                            <th className="py-2 px-2 sm:py-2.5 sm:px-3 text-right">{lang === 'de' ? 'Datum' : 'Date'}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -384,12 +384,12 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                                 i === 0 ? 'bg-amber-50' : i === 1 ? 'bg-slate-50' : 'bg-white'
                               }`}
                             >
-                              <td className="py-2.5 px-3 font-bold text-slate-500">
+                              <td className="py-2 px-2 sm:py-2.5 sm:px-3 font-bold text-slate-500">
                                 {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`}
                               </td>
-                              <td className="py-2.5 px-3 font-bold text-slate-800">{entry.name}</td>
-                              <td className="py-2.5 px-3 text-right font-extrabold text-amber-600">{entry.points}</td>
-                              <td className="py-2.5 px-3 text-right text-sm text-slate-400">
+                              <td className="py-2 px-2 sm:py-2.5 sm:px-3 font-bold text-slate-800 truncate max-w-[100px] sm:max-w-none">{entry.name}</td>
+                              <td className="py-2 px-2 sm:py-2.5 sm:px-3 text-right font-extrabold text-amber-600">{entry.points}</td>
+                              <td className="py-2 px-2 sm:py-2.5 sm:px-3 text-right text-xs sm:text-sm text-slate-400">
                                 {new Date(entry.date).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                               </td>
                             </tr>
@@ -398,17 +398,17 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       </table>
                     </div>
                   ) : (
-                    <p className="text-slate-500 mb-6">
+                    <p className="text-slate-500 mb-4 sm:mb-6 text-sm sm:text-base">
                       {lang === 'de' ? 'Noch keine Einträge.' : 'No entries yet.'}
                     </p>
                   )}
 
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={resetQuiz}
-                      className="bg-indigo-600 text-white text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-indigo-700 touch-manipulation"
+                      className="bg-indigo-600 text-white text-base sm:text-lg font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-full shadow-lg hover:bg-indigo-700 touch-manipulation"
                     >
                       {t.playAgain}
                     </motion.button>
@@ -416,7 +416,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setShowHighscores(false)}
-                      className="bg-slate-200 text-slate-800 text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-slate-300 touch-manipulation"
+                      className="bg-slate-200 text-slate-800 text-base sm:text-lg font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-full shadow-lg hover:bg-slate-300 touch-manipulation"
                     >
                       {t.backBtn}
                     </motion.button>
