@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { content, Language, Question } from '../data';
 import { playSound } from '../sounds';
-import { ArrowLeft, CheckCircle2, XCircle, Trophy, Heart, HeartOff } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, XCircle, Trophy, Heart, HeartOff, Square } from 'lucide-react';
 
 interface HighscoreEntry {
   name: string;
@@ -65,6 +65,9 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
     if (isCorrect) {
       playSound('correct');
       setPoints(p => p + POINTS_CORRECT);
+      setTimeout(() => {
+        nextQuestion();
+      }, 1000);
     } else {
       playSound('wrong');
       setPoints(p => Math.max(0, p + POINTS_WRONG));
@@ -125,6 +128,11 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
     setShowHighscores(false);
   };
 
+  const stopQuiz = () => {
+    playSound('click');
+    setIsFinished(true);
+  };
+
   if (questions.length === 0) return null;
 
   const highscores = getHighscores();
@@ -137,15 +145,28 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
       className="w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[60vh]"
     >
       <div className="px-4 py-2 sm:px-6 sm:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={onBack}
-          className="flex items-center gap-2 text-indigo-600 font-bold bg-white px-4 py-2 rounded-full shadow-sm touch-manipulation"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="hidden sm:inline">{t.backBtn}</span>
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={onBack}
+            className="flex items-center gap-2 text-indigo-600 font-bold bg-white px-4 py-2 rounded-full shadow-sm touch-manipulation"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="hidden sm:inline">{t.backBtn}</span>
+          </motion.button>
+          {!isFinished && (
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={stopQuiz}
+              className="flex items-center gap-2 text-red-600 font-bold bg-red-50 px-4 py-2 rounded-full shadow-sm touch-manipulation border border-red-200"
+            >
+              <Square className="w-4 h-4 fill-red-600" />
+              <span className="hidden sm:inline">{lang === 'de' ? 'Beenden' : 'Stop'}</span>
+            </motion.button>
+          )}
+        </div>
         {!isFinished && (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
@@ -221,14 +242,16 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       : <span className="text-red-500">{POINTS_WRONG} {lang === 'de' ? 'Punkte' : 'points'}</span>
                     }
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={nextQuestion}
-                    className="bg-indigo-600 text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
-                  >
-                    {currentIndex < questions.length - 1 ? t.nextQuestion : t.finishQuiz}
-                  </motion.button>
+                  {selectedAnswer !== questions[currentIndex].answer && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={nextQuestion}
+                      className="bg-indigo-600 text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
+                    >
+                      {currentIndex < questions.length - 1 ? t.nextQuestion : t.finishQuiz}
+                    </motion.button>
+                  )}
                 </motion.div>
               )}
             </motion.div>
@@ -259,9 +282,13 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                   <p className="text-xl text-slate-600 font-medium mb-2">
                     {gameOver
                       ? (lang === 'de' ? '5 falsche Antworten!' : '5 wrong answers!')
-                      : (lang === 'de'
-                        ? `Du hast alle Fragen beantwortet!`
-                        : `You answered all questions!`)
+                      : currentIndex < questions.length - 1
+                        ? (lang === 'de'
+                          ? `Quiz nach ${currentIndex + 1} von ${questions.length} Fragen beendet.`
+                          : `Quiz stopped after ${currentIndex + 1} of ${questions.length} questions.`)
+                        : (lang === 'de'
+                          ? `Du hast alle Fragen beantwortet!`
+                          : `You answered all questions!`)
                     }
                   </p>
 
@@ -363,7 +390,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                               <td className="py-2.5 px-3 font-bold text-slate-800">{entry.name}</td>
                               <td className="py-2.5 px-3 text-right font-extrabold text-amber-600">{entry.points}</td>
                               <td className="py-2.5 px-3 text-right text-sm text-slate-400">
-                                {new Date(entry.date).toLocaleDateString()}
+                                {new Date(entry.date).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                               </td>
                             </tr>
                           ))}
