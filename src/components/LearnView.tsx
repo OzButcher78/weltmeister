@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { content, Language, Continent, Ocean } from '../data';
 import { playSound } from '../sounds';
-import { ArrowLeft, Info, X, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, X, ChevronRight, ChevronLeft } from 'lucide-react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { getContinentId } from '../continentMap';
 import worldData from '../world.json';
@@ -56,36 +56,6 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
       </div>
 
       <div className="flex-1 overflow-y-auto p-3 sm:p-5 flex flex-col">
-        {/* General Info Section */}
-        <div className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-2xl border border-indigo-100 shadow-sm">
-          <h3 className="text-lg font-bold text-indigo-800 mb-2 flex items-center gap-2">
-            <Info className="w-5 h-5" />
-            {lang === 'de' ? 'Wusstest du schon?' : 'Did you know?'}
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-indigo-900/80 text-sm">
-            <div className="bg-white/60 p-2.5 rounded-xl">
-              <span className="font-bold block mb-0.5">🌍 {lang === 'de' ? 'Wie viele gibt es?' : 'How many are there?'}</span>
-              {lang === 'de' ? 'Es gibt 7 Kontinente und 5 Ozeane auf unserer Erde.' : 'There are 7 continents and 5 oceans on our Earth.'}
-            </div>
-            <div className="bg-white/60 p-2.5 rounded-xl">
-              <span className="font-bold block mb-0.5">🐘 {lang === 'de' ? 'Größter & Kleinster:' : 'Largest & Smallest:'}</span>
-              {lang === 'de' ? 'Asien ist der größte und Ozeanien der kleinste Kontinent.' : 'Asia is the largest and Oceania is the smallest continent.'}
-            </div>
-            <div className="bg-white/60 p-2.5 rounded-xl">
-              <span className="font-bold block mb-0.5">🌊 {lang === 'de' ? 'Größter Ozean:' : 'Largest Ocean:'}</span>
-              {lang === 'de' ? 'Der Pazifische Ozean ist der größte und tiefste Ozean.' : 'The Pacific Ocean is the largest and deepest ocean.'}
-            </div>
-            <div className="bg-white/60 p-2.5 rounded-xl">
-              <span className="font-bold block mb-0.5">🧊 {lang === 'de' ? 'Kältester Kontinent:' : 'Coldest Continent:'}</span>
-              {lang === 'de' ? 'Antarktika ist fast vollständig mit Eis bedeckt.' : 'Antarctica is almost completely covered in ice.'}
-            </div>
-            <div className="bg-white/60 p-2.5 rounded-xl">
-              <span className="font-bold block mb-0.5">👨‍👩‍👧‍👦 {lang === 'de' ? 'Die meisten Menschen:' : 'Most People:'}</span>
-              {lang === 'de' ? 'In Asien leben die meisten Menschen der Welt.' : 'Most people in the world live in Asia.'}
-            </div>
-          </div>
-        </div>
-
         {/* World Map */}
         <div className="relative w-full max-w-4xl mx-auto mb-4 aspect-[2/1] bg-sky-100 rounded-3xl overflow-hidden border-4 border-white shadow-inner flex-shrink-0">
           <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} style={{ width: "100%", height: "100%" }}>
@@ -164,7 +134,7 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
 
         {/* Continent Cards */}
         <h3 className="text-lg font-bold text-indigo-800 mb-2">{lang === 'de' ? 'Kontinente' : 'Continents'}</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3">
           {t.continents.map((c, i) => (
             <motion.div
               key={c.id}
@@ -176,16 +146,14 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               onMouseEnter={() => setHoveredContinent(c.id)}
               onMouseLeave={() => setHoveredContinent(null)}
               onClick={() => handleSelect(c)}
-              className={`${c.color} cursor-pointer rounded-2xl p-2.5 text-white shadow-md relative overflow-hidden group touch-manipulation`}
+              className={`${c.color} cursor-pointer rounded-2xl p-3 text-white shadow-md relative overflow-hidden group touch-manipulation`}
             >
-              <div className="absolute -right-3 -bottom-3 text-4xl opacity-30 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute -right-3 -bottom-3 text-5xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {c.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-2">
-                <span className="text-2xl">{c.emoji}</span>
-                <div>
-                  <h3 className="text-sm font-bold leading-tight">{c.name}</h3>
-                </div>
+              <div className="relative z-10 flex items-center gap-2.5">
+                <span className="text-3xl">{c.emoji}</span>
+                <h3 className="text-base font-bold leading-tight">{c.name}</h3>
               </div>
             </motion.div>
           ))}
@@ -193,7 +161,7 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
 
         {/* Ocean Cards */}
         <h3 className="text-lg font-bold text-indigo-800 mb-2">{lang === 'de' ? 'Ozeane' : 'Oceans'}</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
           {t.oceans.map((o, i) => (
             <motion.div
               key={o.id}
@@ -203,16 +171,14 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               whileHover={{ scale: 1.03, y: -3 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSelect(o)}
-              className={`${o.color} cursor-pointer rounded-2xl p-2.5 text-white shadow-md relative overflow-hidden group touch-manipulation`}
+              className={`${o.color} cursor-pointer rounded-2xl p-3 text-white shadow-md relative overflow-hidden group touch-manipulation`}
             >
-              <div className="absolute -right-3 -bottom-3 text-4xl opacity-30 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute -right-3 -bottom-3 text-5xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {o.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-2">
-                <span className="text-2xl">{o.emoji}</span>
-                <div>
-                  <h3 className="text-sm font-bold leading-tight">{o.name}</h3>
-                </div>
+              <div className="relative z-10 flex items-center gap-2.5">
+                <span className="text-3xl">{o.emoji}</span>
+                <h3 className="text-base font-bold leading-tight">{o.name}</h3>
               </div>
             </motion.div>
           ))}
