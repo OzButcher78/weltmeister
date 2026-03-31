@@ -116,19 +116,38 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
             </Geographies>
           </ComposableMap>
           
+          {/* Continent Labels on Map */}
+          {t.continents.map(c => (
+            <div
+              key={`label-${c.id}`}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10 transition-opacity duration-200"
+              style={{
+                left: `${c.mapX}%`,
+                top: `${c.mapY}%`,
+                opacity: hoveredContinent === c.id ? 1 : 0,
+              }}
+            >
+              <span className="bg-white/90 backdrop-blur-sm text-slate-800 text-xs sm:text-sm font-bold px-2 py-1 rounded-lg shadow-md whitespace-nowrap">
+                {c.name}
+              </span>
+            </div>
+          ))}
+
           {/* Oceans on Map */}
           {t.oceans.map(o => (
-            <motion.button
-              key={o.id}
-              whileHover={{ scale: 1.3 }}
-              whileTap={{ scale: 0.9 }}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 text-3xl sm:text-4xl drop-shadow-md z-10"
-              style={{ left: `${o.mapX}%`, top: `${o.mapY}%` }}
-              onClick={() => handleSelect(o)}
-              title={o.name}
-            >
-              {o.emoji}
-            </motion.button>
+            <div key={o.id} className="group absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: `${o.mapX}%`, top: `${o.mapY}%` }}>
+              <motion.button
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-3xl sm:text-4xl drop-shadow-md"
+                onClick={() => handleSelect(o)}
+              >
+                {o.emoji}
+              </motion.button>
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 bg-white/90 backdrop-blur-sm text-slate-800 text-xs sm:text-sm font-bold px-2 py-1 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                {o.name}
+              </span>
+            </div>
           ))}
         </div>
 
