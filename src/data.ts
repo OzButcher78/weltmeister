@@ -201,7 +201,7 @@ export const content: Record<Language, Content> = {
           "Hier liegt der Marianengraben, die tiefste Stelle der Weltmeere."
         ],
         animals: ["Weißer Hai", "Meeresschildkröte", "Delfin"],
-        mapX: 10,
+        mapX: 8,
         mapY: 50
       },
       {
@@ -215,8 +215,8 @@ export const content: Record<Language, Content> = {
           "Bekannt für den Golfstrom, der warmes Wasser nach Europa bringt."
         ],
         animals: ["Buckelwal", "Papageitaucher", "Schwertfisch"],
-        mapX: 35,
-        mapY: 45
+        mapX: 38,
+        mapY: 32
       },
       {
         id: 'indian',
@@ -229,8 +229,8 @@ export const content: Record<Language, Content> = {
           "Das Wasser hier ist oft besonders warm."
         ],
         animals: ["Clownfisch", "Mantarochen", "Dugong"],
-        mapX: 65,
-        mapY: 65
+        mapX: 68,
+        mapY: 58
       },
       {
         id: 'southern',
@@ -432,7 +432,7 @@ export const content: Record<Language, Content> = {
         name: 'Pacific Ocean',
         emoji: '🌊',
         color: 'bg-blue-600',
-        mapX: 10,
+        mapX: 8,
         mapY: 50,
         facts: [
           "The largest and deepest ocean on Earth.",
@@ -446,8 +446,8 @@ export const content: Record<Language, Content> = {
         name: 'Atlantic Ocean',
         emoji: '🐋',
         color: 'bg-blue-500',
-        mapX: 35,
-        mapY: 45,
+        mapX: 38,
+        mapY: 32,
         facts: [
           "The second largest ocean.",
           "Separates the Americas from Europe and Africa.",
@@ -460,8 +460,8 @@ export const content: Record<Language, Content> = {
         name: 'Indian Ocean',
         emoji: '🐠',
         color: 'bg-teal-500',
-        mapX: 65,
-        mapY: 65,
+        mapX: 68,
+        mapY: 58,
         facts: [
           "The third largest ocean.",
           "Located between Africa, Asia, and Australia.",

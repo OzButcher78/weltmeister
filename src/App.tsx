@@ -55,7 +55,7 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative flex items-start justify-center p-2 sm:p-4">
+      <main className="flex-1 relative flex items-start justify-center px-2 pt-1 pb-2 sm:px-4 sm:pt-1 sm:pb-4">
         <AnimatePresence mode="wait">
           {view === 'menu' && (
             <motion.div
