@@ -64,7 +64,7 @@ export default function App() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={toggleLang}
-          className="bg-white/30 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
+          className="bg-white/30 backdrop-blur-md px-2 py-1 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm flex items-center gap-1 sm:gap-2 text-xs sm:text-base"
         >
           <span>{lang === 'de' ? 'DE 🌐 EN' : 'EN 🌐 DE'}</span>
         </motion.button>
@@ -102,7 +102,7 @@ export default function App() {
                   onClick={() => navigate('learn')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation"
                 >
-                  <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />
+                  <BookOpen className="hidden sm:block w-7 h-7" />
                   {t.learnBtn}
                 </motion.button>
 
@@ -112,7 +112,7 @@ export default function App() {
                   onClick={() => navigate('quiz')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation"
                 >
-                  <Gamepad2 className="w-6 h-6 sm:w-7 sm:h-7" />
+                  <Gamepad2 className="hidden sm:block w-7 h-7" />
                   {t.quizBtn}
                 </motion.button>
 
@@ -122,7 +122,7 @@ export default function App() {
                   onClick={() => navigate('highscores')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
                 >
-                  <Trophy className="w-6 h-6 sm:w-7 sm:h-7" />
+                  <Trophy className="hidden sm:block w-7 h-7" />
                   {lang === 'de' ? 'Bestenliste' : 'Highscores'}
                 </motion.button>
               </div>
@@ -216,8 +216,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="px-3 py-1.5 sm:px-4 sm:py-2 text-center text-white/80 text-xs sm:text-sm font-medium relative z-10 safe-bottom">
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-1 sm:mb-2">
+      <footer className="px-2 py-0.5 sm:px-4 sm:py-1.5 text-center text-white/80 text-[10px] sm:text-sm font-medium relative z-10 safe-bottom">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-4 mb-0.5 sm:mb-1.5">
           <button onClick={() => navigate('impressum')} className="hover:text-white transition-colors touch-manipulation">
             {t.legal.impressum.title}
           </button>
