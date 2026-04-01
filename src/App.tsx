@@ -56,7 +56,7 @@ export default function App() {
           onClick={() => navigate('menu')}
           className="flex items-center gap-1.5 sm:gap-2 bg-white/30 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm text-sm sm:text-base"
         >
-          <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
+          <Globe className="w-5 h-5 sm:w-6 sm:h-6 hidden sm:block" />
           <span className="hidden sm:inline">{t.title}</span>
         </motion.button>
 
@@ -123,7 +123,7 @@ export default function App() {
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
                 >
                   <Trophy className="w-6 h-6 sm:w-7 sm:h-7" />
-                  {lang === 'de' ? 'Bestenliste 🏆' : 'Highscores 🏆'}
+                  {lang === 'de' ? 'Bestenliste' : 'Highscores'}
                 </motion.button>
               </div>
             </motion.div>

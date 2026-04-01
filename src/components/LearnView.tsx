@@ -170,9 +170,8 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               <div className="absolute -right-3 -bottom-3 text-4xl sm:text-5xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {c.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-1.5 sm:gap-2.5">
-                <span className="text-2xl sm:text-3xl">{c.emoji}</span>
-                <h3 className="text-sm sm:text-base font-bold leading-tight">{c.name}</h3>
+              <div className="relative z-10 flex items-center justify-center">
+                <h3 className="text-sm sm:text-base font-bold leading-tight text-center">{c.name}</h3>
               </div>
             </motion.div>
           ))}
@@ -195,9 +194,8 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               <div className="absolute -right-3 -bottom-3 text-4xl sm:text-5xl opacity-30 group-hover:scale-110 transition-transform duration-300">
                 {o.emoji}
               </div>
-              <div className="relative z-10 flex items-center gap-1.5 sm:gap-2.5">
-                <span className="text-2xl sm:text-3xl">{o.emoji}</span>
-                <h3 className="text-sm sm:text-base font-bold leading-tight">{o.name}</h3>
+              <div className="relative z-10 flex items-center justify-center">
+                <h3 className="text-sm sm:text-base font-bold leading-tight text-center">{o.name}</h3>
               </div>
             </motion.div>
           ))}
