@@ -219,28 +219,28 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-8rem)]"
+              className="bg-white w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-6rem)]"
             >
-              <div className={`${selected.color} p-4 sm:p-6 text-center relative flex-shrink-0`}>
-                <button onClick={close} className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 text-white/80 hover:text-white bg-black/10 hover:bg-black/20 rounded-full p-1.5 sm:p-2 transition-colors">
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              <div className={`${selected.color} p-3 sm:p-6 text-center relative flex-shrink-0`}>
+                <button onClick={close} className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white/80 hover:text-white bg-black/10 hover:bg-black/20 rounded-full p-1 sm:p-2 transition-colors">
+                  <X className="w-4 h-4 sm:w-6 sm:h-6" />
                 </button>
-                <span className="text-4xl sm:text-5xl md:text-6xl block mb-1 sm:mb-2">{selected.emoji}</span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">{selected.name}</h3>
+                <span className="text-3xl sm:text-5xl md:text-6xl block mb-0.5 sm:mb-2">{selected.emoji}</span>
+                <h3 className="text-xl sm:text-3xl font-extrabold text-white">{selected.name}</h3>
               </div>
 
-              <div className="p-4 sm:p-6 md:p-8 flex-1 flex flex-col justify-center min-h-[180px] sm:min-h-[250px] overflow-y-auto">
+              <div className="px-3 py-2 sm:p-6 md:p-8 flex-1 flex flex-col justify-center min-h-[120px] sm:min-h-[250px] overflow-y-auto">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={factStep}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="flex flex-col gap-4 sm:gap-6"
+                    className="flex flex-col gap-2 sm:gap-6"
                   >
-                    <div className="flex items-start gap-2.5 sm:gap-4">
-                      <span className="text-2xl sm:text-4xl leading-none mt-1">✨</span>
-                      <p className="text-lg sm:text-xl md:text-2xl text-slate-700 font-bold leading-snug">
+                    <div className="flex items-start gap-2 sm:gap-4">
+                      <span className="text-xl sm:text-4xl leading-none mt-0.5">✨</span>
+                      <p className="text-base sm:text-xl md:text-2xl text-slate-700 font-bold leading-snug">
                         {selected.facts[factStep]}
                       </p>
                     </div>
@@ -251,7 +251,7 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="mt-2 sm:mt-4 bg-slate-100 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200"
+                        className="mt-1.5 sm:mt-4 bg-slate-100 p-2 sm:p-4 rounded-lg sm:rounded-2xl border border-slate-200"
                       >
                         <h4 className="font-bold text-slate-600 mb-1.5 sm:mb-2 uppercase tracking-wide text-xs sm:text-sm">
                           {lang === 'de' ? 'Tiere hier:' : 'Animals here:'}
@@ -269,26 +269,26 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
                 </AnimatePresence>
               </div>
 
-              <div className="p-3 sm:p-4 md:p-6 bg-slate-50 border-t border-slate-100 flex-shrink-0">
+              <div className="px-2.5 py-2 sm:p-4 md:p-6 bg-slate-50 border-t border-slate-100 flex-shrink-0">
                 {/* Progress Dots */}
-                <div className="flex justify-center gap-1.5 sm:gap-2 mb-3 sm:mb-6">
+                <div className="flex justify-center gap-1.5 sm:gap-2 mb-2 sm:mb-6">
                   {selected.facts.map((_, i) => (
                     <div
                       key={i}
-                      className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-colors ${i === factStep ? selected.color : 'bg-slate-300'}`}
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${i === factStep ? selected.color : 'bg-slate-300'}`}
                     />
                   ))}
                 </div>
 
-                <div className="flex justify-between gap-2 sm:gap-4">
+                <div className="flex justify-between gap-1.5 sm:gap-4">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={prevFact}
                     disabled={factStep === 0}
-                    className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-colors touch-manipulation ${factStep === 0 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
+                    className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-colors touch-manipulation ${factStep === 0 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
                   >
-                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <ChevronLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                     {t.prevFact}
                   </motion.button>
 
@@ -297,17 +297,17 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={nextFact}
-                      className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base text-white transition-colors touch-manipulation ${selected.color} hover:brightness-110`}
+                      className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white transition-colors touch-manipulation ${selected.color} hover:brightness-110`}
                     >
                       {t.nextFact}
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                     </motion.button>
                   ) : (
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={close}
-                      className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base text-white bg-indigo-500 hover:bg-indigo-600 transition-colors touch-manipulation"
+                      className="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white bg-indigo-500 hover:bg-indigo-600 transition-colors touch-manipulation"
                     >
                       {t.finishFacts}
                     </motion.button>

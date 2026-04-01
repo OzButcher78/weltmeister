@@ -144,15 +144,15 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
       exit={{ opacity: 0, scale: 0.95 }}
       className="w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[50dvh] sm:min-h-[60dvh]"
     >
-      <div className="px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+      <div className="px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between gap-1">
+        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="flex items-center gap-1.5 sm:gap-2 text-indigo-600 font-bold bg-white px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 text-indigo-600 font-bold bg-white px-2 py-1 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation text-xs sm:text-base"
           >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             <span className="hidden sm:inline">{t.backBtn}</span>
           </motion.button>
           {!isFinished && (
@@ -160,34 +160,39 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={stopQuiz}
-              className="flex items-center gap-1.5 sm:gap-2 text-red-600 font-bold bg-red-50 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation border border-red-200 text-sm sm:text-base"
+              className="flex items-center gap-1 sm:gap-2 text-red-600 font-bold bg-red-50 px-2 py-1 sm:px-4 sm:py-2 rounded-full shadow-sm touch-manipulation border border-red-200 text-xs sm:text-base"
             >
-              <Square className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-red-600" />
+              <Square className="w-3 h-3 sm:w-4 sm:h-4 fill-red-600" />
               <span className="hidden sm:inline">{lang === 'de' ? 'Beenden' : 'Stop'}</span>
             </motion.button>
           )}
         </div>
         {!isFinished && (
-          <div className="flex items-center gap-1.5 sm:gap-4">
-            <div className="flex items-center gap-0.5 sm:gap-1 bg-amber-50 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-amber-200">
-              <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
-              <span className="font-bold text-amber-700 text-xs sm:text-sm">{points}</span>
+          <div className="flex items-center gap-1 sm:gap-4">
+            <div className="flex items-center gap-0.5 sm:gap-1 bg-amber-50 px-1.5 py-0.5 sm:px-3 sm:py-1.5 rounded-full border border-amber-200">
+              <Trophy className="w-3 h-3 sm:w-4 sm:h-4 text-amber-500" />
+              <span className="font-bold text-amber-700 text-[10px] sm:text-sm">{points}</span>
             </div>
-            <div className="flex items-center gap-0.5">
+            {/* Hearts: show icons on sm+, compact text on mobile */}
+            <div className="hidden sm:flex items-center gap-0.5">
               {Array.from({ length: MAX_WRONG }).map((_, i) => (
                 i < livesLeft
-                  ? <Heart key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-red-400 fill-red-400" />
-                  : <HeartOff key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300" />
+                  ? <Heart key={i} className="w-5 h-5 text-red-400 fill-red-400" />
+                  : <HeartOff key={i} className="w-5 h-5 text-slate-300" />
               ))}
             </div>
-            <div className="text-xs sm:text-sm font-bold text-slate-500 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-sm">
+            <div className="flex sm:hidden items-center gap-0.5 bg-red-50 px-1.5 py-0.5 rounded-full border border-red-200">
+              <Heart className="w-3 h-3 text-red-400 fill-red-400" />
+              <span className="font-bold text-red-500 text-[10px]">{livesLeft}</span>
+            </div>
+            <div className="text-[10px] sm:text-sm font-bold text-slate-500 bg-white px-1.5 py-0.5 sm:px-3 sm:py-1.5 rounded-full shadow-sm">
               {currentIndex + 1}/{questions.length}
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-4 sm:p-6 md:p-10 flex-1 flex flex-col justify-center overflow-y-auto">
+      <div className="px-3 py-2 sm:p-6 md:p-10 flex-1 flex flex-col justify-center overflow-y-auto">
         <AnimatePresence mode="wait">
           {!isFinished ? (
             <motion.div
@@ -197,11 +202,11 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
               exit={{ opacity: 0, x: -20 }}
               className="flex flex-col h-full"
             >
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-800 mb-4 sm:mb-6 md:mb-8 text-center leading-tight">
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-800 mb-2.5 sm:mb-6 md:mb-8 text-center leading-tight">
                 {questions[currentIndex].q}
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 mb-2.5 sm:mb-6 md:mb-8">
                 {questions[currentIndex].options.map((opt, i) => {
                   const isSelected = selectedAnswer === opt;
                   const isCorrect = opt === questions[currentIndex].answer;
@@ -220,11 +225,11 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileTap={!selectedAnswer ? { scale: 0.98 } : {}}
                       onClick={() => handleAnswer(opt)}
                       disabled={selectedAnswer !== null}
-                      className={`relative p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl font-bold transition-all text-left flex justify-between items-center touch-manipulation ${btnClass}`}
+                      className={`relative p-2.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl text-sm sm:text-lg md:text-xl font-bold transition-all text-left flex justify-between items-center touch-manipulation ${btnClass}`}
                     >
                       {opt}
-                      {showCorrect && <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 ml-2" />}
-                      {showWrong && <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 ml-2" />}
+                      {showCorrect && <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 ml-1.5" />}
+                      {showWrong && <XCircle className="w-4 h-4 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 ml-1.5" />}
                     </motion.button>
                   );
                 })}
@@ -234,9 +239,9 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-auto flex flex-col items-center gap-2"
+                  className="mt-auto flex flex-col items-center gap-1.5 sm:gap-2"
                 >
-                  <div className="text-base sm:text-lg font-bold text-slate-500">
+                  <div className="text-sm sm:text-lg font-bold text-slate-500">
                     {selectedAnswer === questions[currentIndex].answer
                       ? <span className="text-green-600">+{POINTS_CORRECT} {lang === 'de' ? 'Punkte' : 'points'}</span>
                       : <span className="text-red-500">{POINTS_WRONG} {lang === 'de' ? 'Punkte' : 'points'}</span>
@@ -247,7 +252,7 @@ export default function QuizView({ lang, onBack }: { lang: Language, onBack: () 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={nextQuestion}
-                      className="bg-indigo-600 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
+                      className="bg-indigo-600 text-white text-base sm:text-xl font-bold py-2.5 sm:py-4 px-6 sm:px-12 rounded-full shadow-lg hover:bg-indigo-700 transition-colors touch-manipulation"
                     >
                       {currentIndex < questions.length - 1 ? t.nextQuestion : t.finishQuiz}
                     </motion.button>
