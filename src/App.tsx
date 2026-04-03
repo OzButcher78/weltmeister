@@ -105,7 +105,7 @@ export default function App() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('learn')}
                   style={{ background: 'linear-gradient(to right, #4ade80, #10b981)' }}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation"
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation text-left"
                 >
                   <BookOpen className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.learnBtn}
@@ -116,7 +116,7 @@ export default function App() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('continentQuiz')}
                   style={{ background: 'linear-gradient(to right, #22d3ee, #14b8a6)' }}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-cyan-200 touch-manipulation"
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-cyan-200 touch-manipulation text-left"
                 >
                   <Map className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.continentQuizBtn}
@@ -127,7 +127,7 @@ export default function App() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('quiz')}
                   style={{ background: 'linear-gradient(to right, #c084fc, #ec4899)' }}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation"
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation text-left"
                 >
                   <Gamepad2 className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.quizBtn}
@@ -138,7 +138,7 @@ export default function App() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('highscores')}
                   style={{ background: 'linear-gradient(to right, #fbbf24, #f97316)' }}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation text-left"
                 >
                   <Trophy className="w-5 h-5 sm:w-7 sm:h-7" />
                   {lang === 'de' ? 'Bestenliste' : 'Highscores'}
