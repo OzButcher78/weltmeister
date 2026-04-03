@@ -54,17 +54,16 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       const pageW = 297;
       const pageH = 210;
-      const margin = 10;
-      const contentW = pageW - margin * 2;
+      const marginX = 3;
+      const contentW = pageW - marginX * 2;
 
       // Header row with continent names
-      const headerY = 8;
+      const headerY = 7;
       const colW = contentW / t.continents.length;
-      const fontSize = 9;
-      pdf.setFontSize(fontSize);
+      pdf.setFontSize(9);
 
       t.continents.forEach((c, i) => {
-        const x = margin + i * colW + colW / 2;
+        const x = marginX + i * colW + colW / 2;
         const [r, g, b] = hexToRgb(c.hexColor);
         pdf.setTextColor(r, g, b);
         pdf.setFont('helvetica', 'bold');
@@ -72,28 +71,28 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
       });
 
       // Dashed fold line
-      const foldY = 14;
+      const foldY = 11;
       pdf.setDrawColor(150, 150, 150);
       pdf.setLineWidth(0.3);
       const dashLen = 3;
       const gapLen = 2;
-      let dx = margin;
-      while (dx < pageW - margin) {
-        const end = Math.min(dx + dashLen, pageW - margin);
+      let dx = marginX;
+      while (dx < pageW - marginX) {
+        const end = Math.min(dx + dashLen, pageW - marginX);
         pdf.line(dx, foldY, end, foldY);
         dx = end + gapLen;
       }
 
       // "Hier falten" / "Fold here" text
-      pdf.setFontSize(6);
+      pdf.setFontSize(5);
       pdf.setTextColor(150, 150, 150);
       pdf.setFont('helvetica', 'italic');
       const foldText = lang === 'de' ? '✂ Hier falten' : '✂ Fold here';
-      pdf.text(foldText, pageW / 2, foldY + 3.5, { align: 'center' });
+      pdf.text(foldText, pageW / 2, foldY + 3, { align: 'center' });
 
-      // Map image below fold line
-      const mapTop = foldY + 6;
-      const availableH = pageH - mapTop - margin;
+      // Map image — fill as much space as possible
+      const mapTop = foldY + 4;
+      const availableH = pageH - mapTop - 2;
       const mapAspect = 800 / 400;
       let mapW = contentW;
       let mapH = mapW / mapAspect;
