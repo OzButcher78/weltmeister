@@ -5,13 +5,14 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, BookOpen, Map, Gamepad2, Trophy } from 'lucide-react';
+import { Globe, BookOpen, Map, Gamepad2, Trophy, Download } from 'lucide-react';
 import { content, Language } from './data';
 import { playSound } from './sounds';
 import LearnView from './components/LearnView';
 import QuizView from './components/QuizView';
 import ContinentQuizView from './components/ContinentQuizView';
 import LegalView from './components/LegalView';
+import MapPdfDownload from './components/MapPdfDownload';
 
 type ViewState = 'menu' | 'learn' | 'continentQuiz' | 'quiz' | 'highscores' | 'impressum' | 'datenschutz' | 'nutzungsbedingungen';
 
@@ -142,6 +143,16 @@ export default function App() {
                 >
                   <Trophy className="w-5 h-5 sm:w-7 sm:h-7" />
                   {lang === 'de' ? 'Bestenliste' : 'Highscores'}
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ background: 'linear-gradient(to right, #64748b, #475569)' }}
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-slate-300 touch-manipulation text-left"
+                >
+                  <Download className="w-5 h-5 sm:w-7 sm:h-7" />
+                  <MapPdfDownload lang={lang} />
                 </motion.button>
               </div>
             </motion.div>
