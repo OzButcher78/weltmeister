@@ -148,8 +148,8 @@ export default function App() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  style={{ background: 'linear-gradient(to right, #64748b, #475569)' }}
-                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-slate-300 touch-manipulation text-left"
+                  style={{ background: 'linear-gradient(to right, #7dd3fc, #38bdf8)' }}
+                  className="flex items-center justify-start gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-sky-200 touch-manipulation text-left"
                 >
                   <Download className="w-5 h-5 sm:w-7 sm:h-7" />
                   <MapPdfDownload lang={lang} />
