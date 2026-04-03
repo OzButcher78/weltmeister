@@ -48,7 +48,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 font-sans text-slate-800 overflow-hidden flex flex-col safe-top">
+    <div className="min-h-dvh bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 font-sans text-slate-800 overflow-y-auto flex flex-col safe-top">
       {/* Header */}
       <header className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-2.5 flex justify-between items-center relative z-10">
         <motion.button

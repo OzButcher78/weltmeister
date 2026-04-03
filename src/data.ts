@@ -60,7 +60,7 @@ export const content: Record<Language, Content> = {
   de: {
     title: "Welt Meister!",
     subtitle: "Lerne alles über unsere 7 Kontinente und 5 Ozeane",
-    learnBtn: "Lernen",
+    learnBtn: "Kontinente Infos",
     quizBtn: "Quiz Starten",
     continentQuizBtn: "Kontinente lernen",
     continentQuizTitle: "Welcher Kontinent ist das?",
@@ -300,7 +300,7 @@ export const content: Record<Language, Content> = {
   en: {
     title: "World Master!",
     subtitle: "Learn all about our 7 continents and 5 oceans",
-    learnBtn: "Learn",
+    learnBtn: "Continent Info",
     quizBtn: "Start Quiz",
     continentQuizBtn: "Learn Continents",
     continentQuizTitle: "Which continent is this?",

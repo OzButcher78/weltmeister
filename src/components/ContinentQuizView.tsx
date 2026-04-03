@@ -7,9 +7,31 @@ import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { getContinentId } from '../continentMap';
 import worldData from '../world.json';
 
+interface HighscoreEntry {
+  name: string;
+  points: number;
+  date: string;
+}
+
 const POINTS_CORRECT = 10;
 const POINTS_WRONG = -5;
 const MAX_WRONG = 5;
+const HIGHSCORE_KEY = 'weltMeisterHighscores';
+
+function getHighscores(): HighscoreEntry[] {
+  try {
+    return JSON.parse(localStorage.getItem(HIGHSCORE_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function saveHighscore(entry: HighscoreEntry) {
+  const scores = getHighscores();
+  scores.push(entry);
+  scores.sort((a, b) => b.points - a.points);
+  localStorage.setItem(HIGHSCORE_KEY, JSON.stringify(scores.slice(0, 10)));
+}
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -30,6 +52,8 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
   const [wrongCount, setWrongCount] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const [nameSaved, setNameSaved] = useState(false);
 
   const livesLeft = MAX_WRONG - wrongCount;
   const target = continentOrder[currentIndex];
@@ -80,6 +104,17 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
     }
   }, [selectedAnswer, target, currentIndex, continentOrder.length, wrongCount]);
 
+  const handleSaveName = () => {
+    if (!playerName.trim()) return;
+    playSound('pop');
+    saveHighscore({
+      name: playerName.trim(),
+      points,
+      date: new Date().toISOString(),
+    });
+    setNameSaved(true);
+  };
+
   const resetQuiz = () => {
     setContinentOrder(shuffle(t.continents));
     setCurrentIndex(0);
@@ -88,6 +123,8 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
     setWrongCount(0);
     setIsFinished(false);
     setGameOver(false);
+    setPlayerName('');
+    setNameSaved(false);
     playSound('click');
   };
 
@@ -256,11 +293,41 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
                   ? (lang === 'de' ? 'Spiel vorbei!' : 'Game Over!')
                   : t.scoreTitle}
               </h2>
-              <p className="text-base sm:text-xl text-slate-600 mb-4 sm:mb-6 font-medium">
-                {lang === 'de'
-                  ? `Du hast ${points} Punkte erreicht!`
-                  : `You scored ${points} points!`}
-              </p>
+
+              <div className="flex justify-center items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
+                <span className="text-3xl sm:text-4xl font-extrabold text-amber-600">{points}</span>
+                <span className="text-lg sm:text-xl text-slate-500 font-bold">{lang === 'de' ? 'Punkte' : 'Points'}</span>
+              </div>
+
+              {!nameSaved ? (
+                <div className="max-w-sm mx-auto mb-4 sm:mb-6 px-2 sm:px-0">
+                  <label className="block text-left text-xs sm:text-sm font-bold text-slate-600 mb-1.5 sm:mb-2">
+                    {lang === 'de' ? 'Dein Name für die Bestenliste:' : 'Your name for the highscore board:'}
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={playerName}
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+                      placeholder={lang === 'de' ? 'Name eingeben...' : 'Enter name...'}
+                      maxLength={20}
+                      className="flex-1 px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl border-2 border-slate-200 focus:border-indigo-400 focus:outline-none text-base sm:text-lg font-medium"
+                    />
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleSaveName}
+                      disabled={!playerName.trim()}
+                      className="bg-amber-500 text-white font-bold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl hover:bg-amber-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
+                    >
+                      {lang === 'de' ? 'Speichern' : 'Save'}
+                    </motion.button>
+                  </div>
+                </div>
+              ) : null}
+
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
