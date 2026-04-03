@@ -10,7 +10,8 @@ export default function LegalView({ lang, page, onBack }: { lang: Language, page
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-5rem)] sm:max-h-[calc(100dvh-5.5rem)] md:max-h-[80dvh]"
+      style={{ backgroundColor: 'rgba(255,255,255,0.9)', WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+      className="w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-5rem)] sm:max-h-[calc(100dvh-5.5rem)] md:max-h-[80dvh]"
     >
       <div className="px-3 py-2 sm:p-4 md:p-6 bg-white/50 border-b border-slate-100 flex items-center justify-between sticky top-0 z-10">
         <motion.button

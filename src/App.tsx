@@ -48,14 +48,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 font-sans text-slate-800 overflow-y-auto flex flex-col safe-top">
+    <div className="min-h-dvh font-sans text-slate-800 overflow-y-auto flex flex-col safe-top" style={{ background: 'linear-gradient(to bottom right, #7dd3fc, #93c5fd, #818cf8)' }}>
       {/* Header */}
       <header className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-2.5 flex justify-between items-center relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => navigate('menu')}
-          className="flex items-center gap-1.5 sm:gap-2 bg-white/30 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm text-sm sm:text-base"
+          style={{ backgroundColor: 'rgba(255,255,255,0.3)', WebkitBackdropFilter: 'blur(12px)', backdropFilter: 'blur(12px)' }}
+          className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm text-sm sm:text-base"
         >
           <Globe className="w-5 h-5 sm:w-6 sm:h-6 hidden sm:block" />
           <span className="hidden sm:inline">{t.title}</span>
@@ -65,7 +66,8 @@ export default function App() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={toggleLang}
-          className="bg-white/30 backdrop-blur-md px-2 py-1 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm flex items-center gap-1 sm:gap-2 text-xs sm:text-base"
+          style={{ backgroundColor: 'rgba(255,255,255,0.3)', WebkitBackdropFilter: 'blur(12px)', backdropFilter: 'blur(12px)' }}
+          className="px-2 py-1 sm:px-4 sm:py-2 rounded-full font-bold text-white shadow-sm flex items-center gap-1 sm:gap-2 text-xs sm:text-base"
         >
           <span>{lang === 'de' ? 'DE 🌐 EN' : 'EN 🌐 DE'}</span>
         </motion.button>
@@ -80,7 +82,8 @@ export default function App() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
-              className="max-w-md w-full bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 text-center"
+              style={{ backgroundColor: 'rgba(255,255,255,0.9)', WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+              className="max-w-md w-full rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 text-center"
             >
               <motion.div
                 animate={{ rotate: [0, 10, -10, 0] }}
@@ -101,7 +104,8 @@ export default function App() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('learn')}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation"
+                  style={{ background: 'linear-gradient(to right, #4ade80, #10b981)' }}
+                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation"
                 >
                   <BookOpen className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.learnBtn}
@@ -111,7 +115,8 @@ export default function App() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('continentQuiz')}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-cyan-400 to-teal-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-cyan-200 touch-manipulation"
+                  style={{ background: 'linear-gradient(to right, #22d3ee, #14b8a6)' }}
+                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-cyan-200 touch-manipulation"
                 >
                   <Map className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.continentQuizBtn}
@@ -121,7 +126,8 @@ export default function App() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('quiz')}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation"
+                  style={{ background: 'linear-gradient(to right, #c084fc, #ec4899)' }}
+                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation"
                 >
                   <Gamepad2 className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.quizBtn}
@@ -131,7 +137,8 @@ export default function App() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('highscores')}
-                  className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
+                  style={{ background: 'linear-gradient(to right, #fbbf24, #f97316)' }}
+                  className="flex items-center justify-center gap-2.5 sm:gap-3 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
                 >
                   <Trophy className="w-5 h-5 sm:w-7 sm:h-7" />
                   {lang === 'de' ? 'Bestenliste' : 'Highscores'}
@@ -150,7 +157,8 @@ export default function App() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
-              className="max-w-lg w-full bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 text-center"
+              style={{ backgroundColor: 'rgba(255,255,255,0.9)', WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+              className="max-w-lg w-full rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 text-center"
             >
               <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-4 sm:mb-6">
                 <Trophy className="w-7 h-7 sm:w-8 sm:h-8 text-amber-500" />

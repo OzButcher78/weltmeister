@@ -138,7 +138,8 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+      style={{ backgroundColor: 'rgba(255,255,255,0.9)', WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+      className="w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col"
     >
       {/* Header */}
       <div className="px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 bg-white/50 border-b border-slate-100 flex items-center justify-between gap-1">

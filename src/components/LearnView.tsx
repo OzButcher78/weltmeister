@@ -39,7 +39,8 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
-      className="w-full max-w-5xl h-[calc(100dvh-5rem)] sm:h-[calc(100dvh-5.5rem)] md:h-[calc(100dvh-6rem)] flex flex-col bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden"
+      style={{ backgroundColor: 'rgba(255,255,255,0.8)', WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+      className="w-full max-w-5xl h-[calc(100dvh-5rem)] sm:h-[calc(100dvh-5.5rem)] md:h-[calc(100dvh-6rem)] flex flex-col rounded-3xl shadow-2xl overflow-hidden"
     >
       <div className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 bg-white/50 border-b border-white/20 flex items-center justify-between">
         <motion.button
