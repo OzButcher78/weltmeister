@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { content, Language, Continent, Ocean } from '../data';
 import { playSound } from '../sounds';
@@ -15,16 +15,46 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
   const [selected, setSelected] = useState<Continent | Ocean | null>(null);
   const [factStep, setFactStep] = useState(0);
   const [hoveredContinent, setHoveredContinent] = useState<string | null>(null);
+  const [randomMode, setRandomMode] = useState(false);
+  const [randomFact, setRandomFact] = useState<{ item: Continent | Ocean; factIndex: number } | null>(null);
+
+  const allItems = [...t.continents, ...t.oceans];
+
+  const pickRandomFact = useCallback(() => {
+    const item = allItems[Math.floor(Math.random() * allItems.length)];
+    const factIndex = Math.floor(Math.random() * item.facts.length);
+    return { item, factIndex };
+  }, [allItems]);
 
   const handleSelect = (item: Continent | Ocean) => {
     playSound('pop');
     setSelected(item);
     setFactStep(0);
+    setRandomMode(false);
+  };
+
+  const startRandomMode = () => {
+    playSound('pop');
+    const rf = pickRandomFact();
+    setRandomFact(rf);
+    setSelected(rf.item);
+    setFactStep(rf.factIndex);
+    setRandomMode(true);
+  };
+
+  const nextRandomFact = () => {
+    playSound('pop');
+    const rf = pickRandomFact();
+    setRandomFact(rf);
+    setSelected(rf.item);
+    setFactStep(rf.factIndex);
   };
 
   const close = () => {
     playSound('click');
     setSelected(null);
+    setRandomMode(false);
+    setRandomFact(null);
   };
 
   const nextFact = () => {
@@ -245,6 +275,19 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               </div>
             </motion.div>
           ))}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            whileHover={{ scale: 1.03, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={startRandomMode}
+            className="bg-gradient-to-br from-indigo-400 to-pink-400 cursor-pointer rounded-xl sm:rounded-2xl p-2 sm:p-3 text-white shadow-md relative overflow-hidden group touch-manipulation"
+          >
+            <div className="relative z-10 flex items-center justify-center">
+              <h3 className="text-sm sm:text-base font-bold leading-tight text-center">{lang === 'de' ? 'Zufällig' : 'Random'}</h3>
+            </div>
+          </motion.div>
         </div>
 
         {/* Ocean Cards */}
@@ -338,49 +381,73 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
               </div>
 
               <div className="px-2.5 py-2 sm:p-4 md:p-6 bg-slate-50 border-t border-slate-100 flex-shrink-0">
-                {/* Progress Dots */}
-                <div className="flex justify-center gap-1.5 sm:gap-2 mb-2 sm:mb-6">
-                  {selected.facts.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${i === factStep ? selected.color : 'bg-slate-300'}`}
-                    />
-                  ))}
-                </div>
-
-                <div className="flex justify-between gap-1.5 sm:gap-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={prevFact}
-                    disabled={factStep === 0}
-                    className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-colors touch-manipulation ${factStep === 0 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
-                    {t.prevFact}
-                  </motion.button>
-
-                  {factStep < selected.facts.length - 1 ? (
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={nextFact}
-                      className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white transition-colors touch-manipulation ${selected.color} hover:brightness-110`}
-                    >
-                      {t.nextFact}
-                      <ChevronRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
-                    </motion.button>
-                  ) : (
+                {randomMode ? (
+                  <div className="flex justify-between gap-1.5 sm:gap-4">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={close}
-                      className="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white bg-indigo-500 hover:bg-indigo-600 transition-colors touch-manipulation"
+                      className="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors touch-manipulation"
                     >
                       {t.finishFacts}
                     </motion.button>
-                  )}
-                </div>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={nextRandomFact}
+                      className="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white bg-gradient-to-r from-indigo-500 to-pink-500 hover:brightness-110 transition-colors touch-manipulation"
+                    >
+                      {t.nextFact}
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+                    </motion.button>
+                  </div>
+                ) : (
+                  <>
+                    {/* Progress Dots */}
+                    <div className="flex justify-center gap-1.5 sm:gap-2 mb-2 sm:mb-6">
+                      {selected.facts.map((_, i) => (
+                        <div
+                          key={i}
+                          className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${i === factStep ? selected.color : 'bg-slate-300'}`}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between gap-1.5 sm:gap-4">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={prevFact}
+                        disabled={factStep === 0}
+                        className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-colors touch-manipulation ${factStep === 0 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+                        {t.prevFact}
+                      </motion.button>
+
+                      {factStep < selected.facts.length - 1 ? (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={nextFact}
+                          className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white transition-colors touch-manipulation ${selected.color} hover:brightness-110`}
+                        >
+                          {t.nextFact}
+                          <ChevronRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+                        </motion.button>
+                      ) : (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={close}
+                          className="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base text-white bg-indigo-500 hover:bg-indigo-600 transition-colors touch-manipulation"
+                        >
+                          {t.finishFacts}
+                        </motion.button>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
           </motion.div>
