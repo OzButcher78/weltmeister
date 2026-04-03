@@ -22,7 +22,8 @@ const manualMapping: Record<string, string> = {
   'Macedonia': 'Europe',
   'Kosovo': 'Europe',
   'S. Sudan': 'Africa',
-  'Antarctica': 'Antarctica'
+  'Antarctica': 'Antarctica',
+  'Russia': 'Asia'
 };
 
 const continentToId: Record<string, string> = {
