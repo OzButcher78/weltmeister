@@ -5,14 +5,15 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, BookOpen, Gamepad2, Trophy } from 'lucide-react';
+import { Globe, BookOpen, Map, Gamepad2, Trophy } from 'lucide-react';
 import { content, Language } from './data';
 import { playSound } from './sounds';
 import LearnView from './components/LearnView';
 import QuizView from './components/QuizView';
+import ContinentQuizView from './components/ContinentQuizView';
 import LegalView from './components/LegalView';
 
-type ViewState = 'menu' | 'learn' | 'quiz' | 'highscores' | 'impressum' | 'datenschutz' | 'nutzungsbedingungen';
+type ViewState = 'menu' | 'learn' | 'continentQuiz' | 'quiz' | 'highscores' | 'impressum' | 'datenschutz' | 'nutzungsbedingungen';
 
 const HIGHSCORE_KEY = 'weltMeisterHighscores';
 
@@ -102,8 +103,18 @@ export default function App() {
                   onClick={() => navigate('learn')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-green-200 touch-manipulation"
                 >
-                  <BookOpen className="hidden sm:block w-7 h-7" />
+                  <BookOpen className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.learnBtn}
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('continentQuiz')}
+                  className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-cyan-400 to-teal-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-cyan-200 touch-manipulation"
+                >
+                  <Map className="w-5 h-5 sm:w-7 sm:h-7" />
+                  {t.continentQuizBtn}
                 </motion.button>
 
                 <motion.button
@@ -112,7 +123,7 @@ export default function App() {
                   onClick={() => navigate('quiz')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-purple-200 touch-manipulation"
                 >
-                  <Gamepad2 className="hidden sm:block w-7 h-7" />
+                  <Gamepad2 className="w-5 h-5 sm:w-7 sm:h-7" />
                   {t.quizBtn}
                 </motion.button>
 
@@ -122,7 +133,7 @@ export default function App() {
                   onClick={() => navigate('highscores')}
                   className="flex items-center justify-center gap-2.5 sm:gap-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-lg sm:text-xl font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-lg shadow-amber-200 touch-manipulation"
                 >
-                  <Trophy className="hidden sm:block w-7 h-7" />
+                  <Trophy className="w-5 h-5 sm:w-7 sm:h-7" />
                   {lang === 'de' ? 'Bestenliste' : 'Highscores'}
                 </motion.button>
               </div>
@@ -130,6 +141,7 @@ export default function App() {
           )}
 
           {view === 'learn' && <LearnView key="learn" lang={lang} onBack={() => navigate('menu')} />}
+          {view === 'continentQuiz' && <ContinentQuizView key="continentQuiz" lang={lang} onBack={() => navigate('menu')} />}
           {view === 'quiz' && <QuizView key="quiz" lang={lang} onBack={() => navigate('menu')} />}
 
           {view === 'highscores' && (

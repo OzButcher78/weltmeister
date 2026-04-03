@@ -34,6 +34,8 @@ export interface Content {
   subtitle: string;
   learnBtn: string;
   quizBtn: string;
+  continentQuizBtn: string;
+  continentQuizTitle: string;
   backBtn: string;
   startQuiz: string;
   nextQuestion: string;
@@ -58,8 +60,10 @@ export const content: Record<Language, Content> = {
   de: {
     title: "Welt Meister!",
     subtitle: "Lerne alles über unsere 7 Kontinente und 5 Ozeane",
-    learnBtn: "Lernen 🌍",
-    quizBtn: "Quiz Starten 🎮",
+    learnBtn: "Lernen",
+    quizBtn: "Quiz Starten",
+    continentQuizBtn: "Kontinente lernen",
+    continentQuizTitle: "Welcher Kontinent ist das?",
     backBtn: "Zurück",
     startQuiz: "Los geht's!",
     nextQuestion: "Nächste Frage",
@@ -296,8 +300,10 @@ export const content: Record<Language, Content> = {
   en: {
     title: "World Master!",
     subtitle: "Learn all about our 7 continents and 5 oceans",
-    learnBtn: "Learn 🌍",
-    quizBtn: "Start Quiz 🎮",
+    learnBtn: "Learn",
+    quizBtn: "Start Quiz",
+    continentQuizBtn: "Learn Continents",
+    continentQuizTitle: "Which continent is this?",
     backBtn: "Back",
     startQuiz: "Let's go!",
     nextQuestion: "Next Question",
