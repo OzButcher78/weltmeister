@@ -13,6 +13,9 @@ interface HighscoreEntry {
   date: string;
 }
 
+// Approximate SVG x-coordinate for 60°E longitude (Ural Mountains) on geoEqualEarth scale 140, 800x400
+const RUSSIA_SPLIT_X = 530;
+
 const POINTS_CORRECT = 10;
 const POINTS_WRONG = -5;
 const MAX_WRONG = 5;
@@ -203,12 +206,40 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
               {/* Map */}
               <div className="relative w-full aspect-[2/1] bg-sky-100 rounded-2xl overflow-hidden border-2 border-white shadow-inner mb-2 sm:mb-4">
                 <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} style={{ width: "100%", height: "100%" }}>
+                  <defs>
+                    <clipPath id="clip-russia-west">
+                      <rect x="0" y="0" width={RUSSIA_SPLIT_X} height="400" />
+                    </clipPath>
+                    <clipPath id="clip-russia-east">
+                      <rect x={RUSSIA_SPLIT_X} y="0" width={800 - RUSSIA_SPLIT_X} height="400" />
+                    </clipPath>
+                  </defs>
                   <Geographies geography={worldData}>
                     {({ geographies }) =>
                       geographies.map((geo) => {
-                        const continentId = getContinentId(geo.properties.name);
-                        const isTarget = continentId === target.id;
+                        const countryName = geo.properties.name;
+                        const continentId = getContinentId(countryName);
                         const continent = t.continents.find(c => c.id === continentId);
+
+                        if (countryName === 'Russia') {
+                          const europeContinent = t.continents.find(c => c.id === 'europe');
+                          const asiaContinent = t.continents.find(c => c.id === 'asia');
+                          const europeFill = target.id === 'europe' ? europeContinent!.hexColor : '#E2E8F0';
+                          const asiaFill = target.id === 'asia' ? asiaContinent!.hexColor : '#E2E8F0';
+                          const geoStyle = (fill: string) => ({
+                            default: { fill, stroke: '#FFF', strokeWidth: 0.5, outline: 'none' },
+                            hover: { fill, stroke: '#FFF', strokeWidth: 0.5, outline: 'none' },
+                            pressed: { fill, stroke: '#FFF', strokeWidth: 0.5, outline: 'none' },
+                          });
+                          return (
+                            <g key={geo.rsmKey}>
+                              <Geography geography={geo} clipPath="url(#clip-russia-west)" style={geoStyle(europeFill)} />
+                              <Geography geography={geo} clipPath="url(#clip-russia-east)" style={geoStyle(asiaFill)} />
+                            </g>
+                          );
+                        }
+
+                        const isTarget = continentId === target.id;
                         const fill = isTarget ? target.hexColor : (continent ? '#E2E8F0' : '#EAEAEC');
 
                         return (
@@ -225,6 +256,7 @@ export default function ContinentQuizView({ lang, onBack }: { lang: Language, on
                       })
                     }
                   </Geographies>
+                  <line x1={RUSSIA_SPLIT_X} y1="100" x2={RUSSIA_SPLIT_X} y2="175" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" opacity="0.6" />
                 </ComposableMap>
               </div>
 

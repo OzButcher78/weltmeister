@@ -7,6 +7,9 @@ import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { getContinentId } from '../continentMap';
 import worldData from '../world.json';
 
+// Approximate SVG x-coordinate for 60°E longitude (Ural Mountains) on geoEqualEarth scale 140, 800x400
+const RUSSIA_SPLIT_X = 530;
+
 export default function LearnView({ lang, onBack }: { lang: Language, onBack: () => void, key?: string }) {
   const t = content[lang];
   const [selected, setSelected] = useState<Continent | Ocean | null>(null);
@@ -60,18 +63,83 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
         {/* World Map */}
         <div className="relative w-full max-w-4xl mx-auto mb-2 sm:mb-3 md:mb-4 aspect-[2/1] bg-sky-100 rounded-2xl sm:rounded-3xl overflow-hidden border-2 sm:border-4 border-white shadow-inner flex-shrink-0">
           <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} style={{ width: "100%", height: "100%" }}>
+            <defs>
+              <clipPath id="clip-learn-russia-west">
+                <rect x="0" y="0" width={RUSSIA_SPLIT_X} height="400" />
+              </clipPath>
+              <clipPath id="clip-learn-russia-east">
+                <rect x={RUSSIA_SPLIT_X} y="0" width={800 - RUSSIA_SPLIT_X} height="400" />
+              </clipPath>
+            </defs>
             <Geographies geography={worldData}>
               {({ geographies }) =>
                 geographies.map((geo) => {
                   const countryName = geo.properties.name;
                   const continentId = getContinentId(countryName);
                   const continent = t.continents.find(c => c.id === continentId);
-                  
+
+                  if (countryName === 'Russia') {
+                    const europeContinent = t.continents.find(c => c.id === 'europe');
+                    const asiaContinent = t.continents.find(c => c.id === 'asia');
+                    const euroFill = europeContinent ? europeContinent.hexColor : '#EAEAEC';
+                    const asiaFill = asiaContinent ? asiaContinent.hexColor : '#EAEAEC';
+                    const isEuropeSelected = selected?.id === 'europe';
+                    const isAsiaSelected = selected?.id === 'asia';
+                    const isEuropeHovered = hoveredContinent === 'europe';
+                    const isAsiaHovered = hoveredContinent === 'asia';
+
+                    const makeStyle = (fill: string, isSelected: boolean, isHovered: boolean, continent: any) => ({
+                      default: {
+                        fill: isSelected ? "#fff" : fill,
+                        stroke: "#FFF",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                        transition: "all 250ms",
+                        opacity: isSelected ? 1 : (isHovered ? 1 : 0.85),
+                      },
+                      hover: {
+                        fill: isSelected ? "#fff" : fill,
+                        stroke: "#FFF",
+                        strokeWidth: 1,
+                        outline: "none",
+                        opacity: 1,
+                        cursor: continent ? "pointer" : "default" as const
+                      },
+                      pressed: {
+                        fill: isSelected ? "#fff" : fill,
+                        stroke: "#FFF",
+                        strokeWidth: 1,
+                        outline: "none",
+                        opacity: 1,
+                      },
+                    });
+
+                    return (
+                      <g key={geo.rsmKey}>
+                        <Geography
+                          geography={geo}
+                          clipPath="url(#clip-learn-russia-west)"
+                          onMouseEnter={() => setHoveredContinent('europe')}
+                          onMouseLeave={() => setHoveredContinent(null)}
+                          onClick={() => { if (europeContinent) handleSelect(europeContinent); }}
+                          style={makeStyle(euroFill, isEuropeSelected, isEuropeHovered, europeContinent)}
+                        />
+                        <Geography
+                          geography={geo}
+                          clipPath="url(#clip-learn-russia-east)"
+                          onMouseEnter={() => setHoveredContinent('asia')}
+                          onMouseLeave={() => setHoveredContinent(null)}
+                          onClick={() => { if (asiaContinent) handleSelect(asiaContinent); }}
+                          style={makeStyle(asiaFill, isAsiaSelected, isAsiaHovered, asiaContinent)}
+                        />
+                      </g>
+                    );
+                  }
+
                   const isSelected = selected?.id === continentId;
                   const isHovered = hoveredContinent === continentId;
-                  
                   const fill = continent ? continent.hexColor : "#EAEAEC";
-                  
+
                   return (
                     <Geography
                       key={geo.rsmKey}
@@ -115,6 +183,7 @@ export default function LearnView({ lang, onBack }: { lang: Language, onBack: ()
                 })
               }
             </Geographies>
+            <line x1={RUSSIA_SPLIT_X} y1="100" x2={RUSSIA_SPLIT_X} y2="175" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" opacity="0.6" />
           </ComposableMap>
           
           {/* Continent Labels on Map */}
