@@ -7,6 +7,11 @@ import jsPDF from 'jspdf';
 
 const RUSSIA_SPLIT_X = 530;
 
+// PDF map uses a taller canvas to better fill the A4 landscape page
+const PDF_MAP_W = 800;
+const PDF_MAP_H = 520;
+const PDF_MAP_SCALE = 180;
+
 function svgToDataUrl(svgElement: SVGSVGElement, width: number, height: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const clone = svgElement.cloneNode(true) as SVGSVGElement;
@@ -48,7 +53,7 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
       const svgEl = svgContainerRef.current?.querySelector('svg');
       if (!svgEl) throw new Error('SVG not found');
 
-      const mapDataUrl = await svgToDataUrl(svgEl, 800, 400);
+      const mapDataUrl = await svgToDataUrl(svgEl, PDF_MAP_W, PDF_MAP_H);
 
       // A4 landscape: 297 x 210 mm
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
@@ -93,7 +98,7 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
       // Map image — fill as much space as possible
       const mapTop = foldY + 4;
       const availableH = pageH - mapTop - 2;
-      const mapAspect = 800 / 400;
+      const mapAspect = PDF_MAP_W / PDF_MAP_H;
       let mapW = contentW;
       let mapH = mapW / mapAspect;
       if (mapH > availableH) {
@@ -117,16 +122,16 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
       {/* Hidden off-screen map for PDF capture */}
       <div
         ref={svgContainerRef}
-        style={{ position: 'absolute', left: '-9999px', top: '-9999px', width: '800px', height: '400px' }}
+        style={{ position: 'absolute', left: '-9999px', top: '-9999px', width: `${PDF_MAP_W}px`, height: `${PDF_MAP_H}px` }}
         aria-hidden="true"
       >
-        <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} style={{ width: '800px', height: '400px' }}>
+        <ComposableMap projectionConfig={{ scale: PDF_MAP_SCALE }} width={PDF_MAP_W} height={PDF_MAP_H} style={{ width: `${PDF_MAP_W}px`, height: `${PDF_MAP_H}px` }}>
           <defs>
             <clipPath id="clip-pdf-russia-west">
-              <rect x="0" y="0" width={RUSSIA_SPLIT_X} height="400" />
+              <rect x="0" y="0" width={RUSSIA_SPLIT_X} height={PDF_MAP_H} />
             </clipPath>
             <clipPath id="clip-pdf-russia-east">
-              <rect x={RUSSIA_SPLIT_X} y="0" width={800 - RUSSIA_SPLIT_X} height="400" />
+              <rect x={RUSSIA_SPLIT_X} y="0" width={PDF_MAP_W - RUSSIA_SPLIT_X} height={PDF_MAP_H} />
             </clipPath>
           </defs>
           <Geographies geography={worldData}>
@@ -178,7 +183,7 @@ export default function MapPdfDownload({ lang }: { lang: Language }) {
               })
             }
           </Geographies>
-          <line x1={RUSSIA_SPLIT_X} y1="100" x2={RUSSIA_SPLIT_X} y2="175" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" opacity="0.6" />
+          <line x1={RUSSIA_SPLIT_X} y1="105" x2={RUSSIA_SPLIT_X} y2="215" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" opacity="0.6" />
         </ComposableMap>
       </div>
 
